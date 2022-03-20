@@ -37,14 +37,3 @@
     service:
         name: "{{ webpack }}"
         state: restarted
-
-
-
-
-
-
-
-
-
-
-
