@@ -1,0 +1,7 @@
+webpack: "httpd"
+documentroot: "/var/www/html"
+homepage: "index.html"
+welcome_msg: "WELCOME TO APACHE WEBSERVER"
+webconf_file: "webconf.conf"
+webport: "7777"
+conf_dir: "/etc/httpd/conf.d"

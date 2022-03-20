@@ -1,0 +1,50 @@
+- hosts: awsvm
+  become: yes
+  vars_files:
+    - "{{ ansible_os_family }}.yml"
+  tasks:
+  - name: Install apache webserver
+    package:
+        name: "{{ webpack }}"
+        state: present
+
+  - name: Configuring webserver
+    template:
+        dest: "{{ documentroot }}/{{ homepage }}"
+        src: "test.html.j2"
+
+  - name: Specific conf change in Ubuntu
+    replace:
+        path: "{{ conf_dir }}/sites-available/000-default.conf"
+        regexp: "80"
+        replace: "{{ webport }}"
+    when: ansible_os_family == "Debian"
+          
+  - name: Changing configuration
+    template:
+        dest: "{{ conf_dir }}/{{ webconf_file }}"
+        src: "{{ webconf_file }}.j2"
+    notify: 
+      - Restart the services
+          
+  - name: Start the services
+    service:
+        name: "{{ webpack }}"
+        state: started
+
+  handlers:
+  - name: Restart the services
+    service:
+        name: "{{ webpack }}"
+        state: restarted
+
+
+
+
+
+
+
+
+
+
+
